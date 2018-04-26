@@ -5,7 +5,7 @@ import time, json
 from datetime import datetime
 
 def hello(request):
-    cookies = request.COOKIES.keys() or []
+    cookies = dict(request.COOKIES)
     print(cookies)
     resp = JsonResponse(data=cookies)
     resp.set_cookie('test_cookie', 'test_cookie')
