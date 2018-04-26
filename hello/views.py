@@ -1,9 +1,14 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-import time
+from django.http import HttpResponse, JsonResponse
+
+import time, json
+from datetime import datetime
 
 def hello(request):
-    for i in range(10):
-        print(i)
-        time.sleep(1)
-    return HttpResponse('hello Django')
+    cookies = request.COOKIES.keys()
+    resp = JsonResponse(cookies)
+    resp.set_cookie('test_cookie', 'test_cookie')
+    
+    expires = datetime.fromtimestamp(time.time()+30*86400)
+    resp.set_cookie('test_cookie_expired', 'test_cookie_expired', expires=expires)
+    return resp
