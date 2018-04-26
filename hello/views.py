@@ -5,8 +5,9 @@ import time, json
 from datetime import datetime
 
 def hello(request):
-    cookies = request.COOKIES.keys()
-    resp = JsonResponse(cookies)
+    cookies = request.COOKIES.keys() or []
+    print(cookies)
+    resp = JsonResponse(data=cookies)
     resp.set_cookie('test_cookie', 'test_cookie')
     
     expires = datetime.fromtimestamp(time.time()+30*86400)
